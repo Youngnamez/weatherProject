@@ -1,7 +1,8 @@
 /* Global Variables */
 
 // Got past cors issue with help from this link: https://forum.freecodecamp.org/t/calling-openweathermap-api-is-blocked-due-to-cors-header-access-control-allow-origin-missing/191868
-const corsUrl = "https://cors-anywhere.herokuapp.com/";
+// const corsUrl = "https://cors-anywhere.herokuapp.com/";
+const corsUrl = "";
 const apiUrl = "https://api.openweathermap.org/data/2.5/weather?zip=";
 const apiKey = "74b94287c045bb0a932cd33e7e5d3b74";
 let zipCode = "07050";
@@ -12,16 +13,25 @@ let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 
 
 async function getWeatherData (baseurl, zipCode, apiKey) {
+    console.log("hello")
+    console.log(baseurl + zipCode + ",us&appid=" + apiKey);
     const response = await fetch(baseurl + zipCode + ",us&appid=" + apiKey, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'http://localhost:8000/',
+    },
+    
+    mode: 'cors',
     credentials: 'same-origin', 
    });
 
     try {
-      const newData = await response.json();
-      console.log(newData);
-             return newData.main.temp
-    }catch(error) {
+        const newData = await response.json();
+        console.log("Temperature from API is: " + newData.main.temp);
+        return newData.main.temp;
+    }
+    catch(error) {
     console.log("error", error);
     // appropriately handle the error
     }
@@ -30,6 +40,11 @@ async function getWeatherData (baseurl, zipCode, apiKey) {
 async function postWeatherData (path, data) {
     const response = await fetch(path, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'http://localhost:8000/',
+    },
+    mode: 'cors',
     credentials: 'same-origin', 
     body: JSON.stringify(data),
    });
@@ -38,9 +53,13 @@ async function postWeatherData (path, data) {
 async function updateUIWithData(path) {
     const response = await fetch(path, {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'http://localhost:8000/',
+        },
+        mode: 'cors',
         credentials: 'same-origin', 
        });
-    console.log("helllo there")
     //some work to update the UI
     try {
         const updatedData = await response.json();
