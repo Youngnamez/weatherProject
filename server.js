@@ -27,10 +27,7 @@ app.listen(8080, function() {
 });
 
 app.get("/getWeatherData", function getWeatherData(req, res) {
-    console.log("Temperature is " + req.body.temperature);
-    console.log("Date is " + req.body.date);
-    console.log("User Response is " + req.body.userResponse);
-    res.send(projectData);
+   res.send(projectData);
 });
 
 app.post("/postWeatherData", function (req, res) {

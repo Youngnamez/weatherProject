@@ -6,7 +6,7 @@ const apiKey = "74b94287c045bb0a932cd33e7e5d3b74";
 // Create a new date instance dynamically with JS
 let d = new Date();
 // Not sure why month comes out as the previous month and not the current
-let newDate = ++d.getMonth() +'.'+ d.getDate()+'.'+ d.getFullYear();
+let newDate = (d.getMonth() + 1) +'.'+ d.getDate()+'.'+ d.getFullYear();
 
 
 async function getWeatherData (baseurl, zipCode, apiKey) {
@@ -69,7 +69,6 @@ document.getElementById("generate").addEventListener('click', function() {
             date: newDate,
             userResponse: document.getElementById('feelings').value //big help from here: https://knowledge.udacity.com/questions/515780
         }
-        console.log(data);
         postWeatherData("/postWeatherData", data) }
     )
     .then(function(result) {
